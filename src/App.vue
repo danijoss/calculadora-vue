@@ -1,45 +1,65 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+import { reactive } from 'vue';
+
+
+  const estado = reactive({
+    operacao: 'adicao',
+    numero1: 0,
+    numero2: 0,
+  })
+
+  const getOperacaoAritmetica = () => {
+    const { operacao } = estado;
+    
+    switch (operacao){
+        case 'subtracao':
+          return parseFloat(estado.numero1) - parseFloat(estado.numero2);
+        case 'multiplicacao':
+          return parseFloat(estado.numero1) * parseFloat(estado.numero2);
+        case 'divisao':
+          return parseFloat(estado.numero1) / parseFloat(estado.numero2);
+        default:
+          return parseFloat(estado.numero1) + parseFloat(estado.numero2);
+    }
+  }
+
+
+
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+  <div class="container">
+    <header class="p-5 mb-4 mt-4 bg-light rounded-3">
+      <h1>Calculadora aritmética</h1>
+    </header>
+    {{ numero1 }}
+    <form>
+      <div class="row">
+        <div class="col-3">
+          <input @change="evento => estado.numero1 = evento.target.value" type="number" placeholder="Digite um número" class="form-control">
+        </div>
+        <div class="col-1">
+          <select @change="evento => estado.operacao = evento.target.value" class="form-control">
+            <option value="adicao">+</option>
+            <option value="subtracao">-</option>
+            <option value="multiplicacao">x</option>
+            <option value="divisao">/</option>
+          </select>
+        </div>
+        <div class="col-3">
+          <input @change="evento => estado.numero2 = evento.target.value" type="number" placeholder="Digite um número" class="form-control">
+        </div>
+        <div class="col p-1">
+          <h3>=</h3>
+        </div>
+        <div class="col-4 pt-1">
+          <h3>{{ getOperacaoAritmetica()}}</h3>
+        </div>
+      </div>
+    </form>
+  </div>
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
-}
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
 </style>
