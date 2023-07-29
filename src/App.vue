@@ -1,5 +1,6 @@
 <script setup>
 import { reactive } from 'vue';
+import Formulario from './components/Formulario.vue'
 
 
   const estado = reactive({
@@ -23,8 +24,6 @@ import { reactive } from 'vue';
     }
   }
 
-
-
 </script>
 
 <template>
@@ -32,31 +31,7 @@ import { reactive } from 'vue';
     <header class="p-5 mb-4 mt-4 bg-light rounded-3">
       <h1>Calculadora aritmética</h1>
     </header>
-    {{ numero1 }}
-    <form>
-      <div class="row">
-        <div class="col-3">
-          <input @change="evento => estado.numero1 = evento.target.value" type="number" placeholder="Digite um número" class="form-control">
-        </div>
-        <div class="col-1">
-          <select @change="evento => estado.operacao = evento.target.value" class="form-control">
-            <option value="adicao">+</option>
-            <option value="subtracao">-</option>
-            <option value="multiplicacao">x</option>
-            <option value="divisao">/</option>
-          </select>
-        </div>
-        <div class="col-3">
-          <input @change="evento => estado.numero2 = evento.target.value" type="number" placeholder="Digite um número" class="form-control">
-        </div>
-        <div class="col p-1">
-          <h3>=</h3>
-        </div>
-        <div class="col-4 pt-1">
-          <h3>{{ getOperacaoAritmetica()}}</h3>
-        </div>
-      </div>
-    </form>
+    <Formulario :operacao-aritmetica="getOperacaoAritmetica()" :trocar-operacao="evento => estado.operacao = evento.target.value" :numero-um="evento => estado.numero1 = evento.target.value" :numero-dois="evento => estado.numero2 = evento.target.value" />
   </div>
 </template>
 
